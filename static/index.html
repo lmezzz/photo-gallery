@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <span class="logo">darkroom</span>
+    <button class="home-btn" onclick="goHome()" title="Go home">⌂ home</button>
+  </header>
+
+  <nav id="breadcrumb" class="breadcrumb"></nav>
+
+  <main>
+    <section id="folders-section" class="hidden">
+      <p class="section-label">folders</p>
+      <div id="folders" class="folder-grid"></div>
+    </section>
+
+    <section id="images-section" class="hidden">
+      <p class="section-label">photos</p>
+      <div id="images" class="image-grid"></div>
+    </section>
+
+    <div id="empty-state" class="empty-state hidden">
+      <p>nothing here yet</p>
+    </div>
+  </main>
+
+  <div id="lightbox" class="lightbox hidden" onclick="closeLightbox()">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <button class="lb-prev" onclick="event.stopPropagation(); shiftLightbox(-1)">‹</button>
+    <img id="lb-img" src="" alt="">
+    <button class="lb-next" onclick="event.stopPropagation(); shiftLightbox(1)">›</button>
+    <p id="lb-caption" class="lb-caption"></p>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

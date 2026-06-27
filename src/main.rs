@@ -29,7 +29,7 @@ struct AppState {
 #[tokio::main]
 async fn main() {
 
-    let photo_root = std::env::var("PHOTO_DIR").unwrap_or("photos".to_string());
+    let photo_root = std::env::var("PHOTOS_DIR").unwrap_or("photos".to_string());
     //nest_service responds to a get request start with /photos here and then wtv is infront of it
     //is fetched from the dir mentioned in the ServeDir ie /photos/test1/a.png
     //so the /photos will be stripped and /test1/a.png will be served from the dir mentioned in the
@@ -52,8 +52,17 @@ async fn respond_for_requested_folder (State(state): State<AppState> ,Query(para
     
     //PHOTO_ROOT Will be declared as an environment variable when we basically create a Docker
     //but if there is no Declared variable it will loo for photos Dir at the running Dir
-    let full_path = format!("{}/{}",state.photos_root , path);
+    let full_path = if path.is_empty() {
+        state.photos_root.clone()
+    } else {
+        format!("{}/{}",state.photos_root , path)
+    };
     
+    println!("photos_root: {}", state.photos_root);
+    println!("full_path: {}", full_path);
+    println!("safe: {}", is_safe_path(&state.photos_root, &full_path));
+    
+
     if !is_safe_path(&state.photos_root , &full_path) {
         return Err(StatusCode::FORBIDDEN);
     }
